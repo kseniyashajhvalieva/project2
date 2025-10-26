@@ -11,3 +11,10 @@ if __name__ == "__main__":
     print(mask_account_card("Visa Platinum 8990922113665229"))
     print(mask_account_card("Visa Gold 5999414228426353"))
     print(mask_account_card("Счет 73654108430135874305"))
+
+from src.widget import mask_account_card, get_date
+
+if __name__ == "__main__":
+    print(mask_account_card("Visa Platinum 7000792289606361"))
+    print(get_date("26.10.2023"))
+    print(get_date("01.01.2024"))
