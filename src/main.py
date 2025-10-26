@@ -16,5 +16,5 @@ from src.widget import get_date, mask_account_card
 
 if __name__ == "__main__":
     print(mask_account_card("Visa Platinum 7000792289606361"))
-    print(get_date("26.10.2023"))
-    print(get_date("01.01.2024"))
+    print(get_date("2024-10-26T14:00:00.000000"))
+    print(get_date("2024-01-01T00:00:00.000000"))

@@ -13,28 +13,13 @@ def mask_account_card(data: str) -> str:
 
 def get_date(date_string: str) -> str:
     """
-    Преобразует строку с датой в формате ДД.ММ.ГГГГ в строку формата "ДД месяц ГГГГ".
+    Преобразует строку с датой в формате YYYY-MM-DDTHH:MM:SS.ffffff в строку формата "ДД.ММ.ГГГГ".
 
-    Args:
-        date_string: Строка с датой в формате ДД.ММ.ГГГГ (например, "26.10.2023").
+    Аргументы:
+        date_string: Строка с датой в формате YYYY-MM-DDTHH:MM:SS.ffffff (например, "2024-03-11T02:26:18.671407").
 
-    Returns:
-        Строка с датой в формате "ДД месяц ГГГГ" (например, "26 октября 2023").
+    Возвращает:
+        Строка с датой в формате "ДД.ММ.ГГГГ" (например, "11.03.2024").
     """
-    date_object = datetime.datetime.strptime(date_string, "%d.%m.%Y").date()
-    month_name = date_object.strftime("%B")
-    month_name_ru = {
-        "January": "января",
-        "February": "февраля",
-        "March": "марта",
-        "April": "апреля",
-        "May": "мая",
-        "June": "июня",
-        "July": "июля",
-        "August": "августа",
-        "September": "сентября",
-        "October": "октября",
-        "November": "ноября",
-        "December": "декабря",
-    }[month_name]
-    return f"{date_object.day} {month_name_ru} {date_object.year}"
+    date_object = datetime.datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%f").date()
+    return date_object.strftime("%d.%m.%Y")
