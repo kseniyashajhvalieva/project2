@@ -5,11 +5,9 @@
 ## Установка
 
 1.  Клонируйте репозиторий:
-    `git clone <URL_вашего_репозитория>`
+    `git clone https://github.com/kseniyashajhvalieva/project2.git`
 2.  Перейдите в директорию проекта:
-    `cd <название_проекта>`
-3.  Установите зависимости (если есть):
-    `pip install -r requirements.txt` (если есть такой файл)
+    `cd project2`
 
 ## Использование функций
 
