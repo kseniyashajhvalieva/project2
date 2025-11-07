@@ -21,7 +21,9 @@ def sort_by_date(operations: List[Dict[str, Any]], reverse: bool = True) -> List
 
     Аргументы:
         operations (list[dict[str, Any]]): Список словарей с банковскими операциями.
-        reverse (bool, optional): Порядок сортировки. True для убывающего (от новых к старым), False для возрастающего. По умолчанию True.
+        reverse (bool, optional): Порядок сортировки.
+                                  True для убывающего (от новых к старым),
+                                  False для возрастающего. По умолчанию True.
 
     Возвращает:
         list[dict[str, Any]]: Новый список словарей, отсортированный по дате.
