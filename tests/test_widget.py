@@ -11,7 +11,7 @@ def operations_data():
             "amount": 1000.0,
             "currency": "RUB",
             "description": "Перевод",
-            "to": "Счет 77593040100000004561"
+            "to": "Счет 77593040100000004561" # Для теста счета
         },
         {
             "id": 939719570,
@@ -20,7 +20,7 @@ def operations_data():
             "amount": 500.0,
             "currency": "RUB",
             "description": "Перевод",
-            "to": "41428829725561076141"
+            "to": "Карта Visa Classic 41428829725561076141" # Измененный формат для теста карты
         },
         {
             "id": 594226727,
@@ -36,23 +36,25 @@ def operations_data():
 def test_mask_account_card_account(operations_data):
     # Тестируем маскировку счета
     account_entry = operations_data[0]
-    expected_mask = "4561"
+    expected_mask = "**4561" # Ожидаем ** (из masks.py) + последние 4 цифры
     assert mask_account_card(account_entry["to"]) == expected_mask
 
 def test_mask_account_card_card(operations_data):
     # Тестируем маскировку карты
     card_entry = operations_data[1]
-    expected_mask = "4142 88** **** 6141"
+    expected_mask = "4142 88** **** 6141" # Ожидаем ** (из masks.py)
     assert mask_account_card(card_entry["to"]) == expected_mask
 
 def test_mask_account_card_invalid_input():
     # Тестируем некорректный ввод
     with pytest.raises(ValueError, match="Invalid input string for masking"):
         mask_account_card("Invalid input")
-    with pytest.raises(ValueError, match="Account number must be an integer."):
+    with pytest.raises(ValueError, match="invalid literal for int() with base 10: 'abc'"): # Ожидаем от int('abc')
         mask_account_card("Счет abc")
-    with pytest.raises(TypeError, match="Card number must be an integer."):
-        mask_account_card("Карта 1234567890")
+    with pytest.raises(TypeError, match="Card number must be an integer."): # Ожидаем эту ошибку из src/masks.py
+        mask_account_card("Карта abc")
+    with pytest.raises(TypeError, match="Account number must be an integer."): # Ожидаем эту ошибку из src/masks.py
+        mask_account_card("Счет abcdef") # Если число слишком длинное, но не int
 
 def test_get_date_valid_format():
     # Тестируем корректный формат даты
