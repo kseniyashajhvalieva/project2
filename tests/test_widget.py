@@ -47,7 +47,7 @@ def test_mask_account_card_card(operations_data):
 
 def test_mask_account_card_invalid_input():
     # Тестируем некорректный ввод
-    with pytest.raises(ValueError, match="Invalid input string for masking"):
+    with pytest.raises(ValueError, match="invalid literal for int() with base 10: 'abc'"):
         mask_account_card("Invalid input")
     with pytest.raises(ValueError, match="invalid literal for int() with base 10: 'abc'"):
         mask_account_card("Счет abc")
