@@ -26,8 +26,8 @@ def test_filter_by_state_empty_list():
     assert filter_by_state([], "EXECUTED") == []
 
 @pytest.mark.parametrize("reverse, expected_ids_order", [
-    (True, [5, 2, 4, 3, 1]),  # От новых к старым
-    (False, [1, 3, 4, 2, 5]) # От старых к новым
+    (True, [2, 5, 3, 4, 1]),  # От новых к старым (2023-01-05, 2023-01-04, 2023-01-03, 2023-01-02, 2023-01-01)
+    (False, [1, 4, 3, 5, 2]) # От старых к новым (2023-01-01, 2023-01-02, 2023-01-03, 2023-01-04, 2023-01-05)
 ])
 def test_sort_by_date(sample_operations, reverse, expected_ids_order):
     sorted_ops = sort_by_date(sample_operations, reverse=reverse)

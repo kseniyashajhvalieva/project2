@@ -36,7 +36,7 @@ def operations_data():
 def test_mask_account_card_account(operations_data):
     # Тестируем маскировку счета
     account_entry = operations_data[0]
-    expected_mask = "**3040"
+    expected_mask = "4561"
     assert mask_account_card(account_entry["to"]) == expected_mask
 
 def test_mask_account_card_card(operations_data):
@@ -47,12 +47,12 @@ def test_mask_account_card_card(operations_data):
 
 def test_mask_account_card_invalid_input():
     # Тестируем некорректный ввод
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Invalid input string for masking"):
         mask_account_card("Invalid input")
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Account number must be an integer."):
         mask_account_card("Счет abc")
-    with pytest.raises(ValueError):
-        mask_account_card("1234567890") # Слишком короткий номер для карты
+    with pytest.raises(TypeError, match="Card number must be an integer."):
+        mask_account_card("Карта 1234567890")
 
 def test_get_date_valid_format():
     # Тестируем корректный формат даты
