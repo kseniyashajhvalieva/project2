@@ -7,7 +7,10 @@ def mask_account_card(data: str) -> str:
     """Маскирует номер карты или счета."""
     if "Счет" in data:
         return get_mask_account(int(data.split()[-1]))
+    elif "Карта" in data:
+        return get_mask_card_number(int(data.split()[-1]))
     else:
+        raise ValueError("Invalid input string for masking")
         return get_mask_card_number(int(data.split()[-1]))
 
 
