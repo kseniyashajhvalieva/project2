@@ -47,11 +47,11 @@ def test_mask_account_card_card(operations_data):
 
 def test_mask_account_card_invalid_input():
     # Тестируем некорректный ввод
-    with pytest.raises(ValueError, match="invalid literal for int() with base 10: 'abc'"):
+    with pytest.raises(ValueError, match="Invalid input string for masking"):
         mask_account_card("Invalid input")
-    with pytest.raises(ValueError, match="invalid literal for int() with base 10: 'abc'"):
+    with pytest.raises(ValueError, match=r"invalid literal for int\(\) with base 10: 'abc'"):
         mask_account_card("Счет abc")
-    with pytest.raises(ValueError, match="invalid literal for int() with base 10: 'abc'"):
+    with pytest.raises(ValueError, match="Invalid input string for masking"):
         mask_account_card("Карта abc")
 
 def test_get_date_valid_format():

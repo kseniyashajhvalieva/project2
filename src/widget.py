@@ -20,8 +20,6 @@ def mask_account_card(data: str) -> str:
             return get_mask_card_number(card_num)
         except ValueError:
             raise ValueError("invalid literal for int() with base 10: '{}'".format(number_str))
-        except TypeError:
-            raise TypeError("Card number must be an integer.")
     else:
         raise ValueError("Invalid input string for masking")
 
