@@ -14,12 +14,14 @@ def mask_account_card(data: str) -> str:
             return get_mask_account(account_num)
         except ValueError:
             raise ValueError("invalid literal for int() with base 10: '{}'".format(number_str))
-    elif any(word in data for word in ["Visa", "MasterCard", "Maestro", "Мир"]):
-        try:
-            card_num = int(number_str)
-            return get_mask_card_number(card_num)
-        except ValueError:
-            raise ValueError("invalid literal for int() with base 10: '{}'".format(number_str))
+            elif any(word in data for word in ["Visa", "MasterCard", "Maestro", "Мир"]):
+            try:
+                card_num = int(number_str)
+                return get_mask_card_number(card_num)
+            except ValueError:
+                raise ValueError("invalid literal for int() with base 10: '{}'".format(number_str))
+            except TypeError:  # Добавляем обработку TypeError, если number_str - не число
+                raise TypeError("Card number must be an integer.")
 
 
 def get_date(date_string: str) -> str:
