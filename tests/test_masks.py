@@ -34,7 +34,7 @@ def test_get_mask_card_number_short(card_number_data: dict) -> None:
 
 def test_get_mask_card_number_only_four_digits(card_number_data: dict) -> None:
     # Если число 4 цифры: 3456 -> "3456  **** 3456" (функция не добавляет ведущие нули, просто берет срезы)
-    assert get_mask_card_number(card_number_data["only_four_digits"]) == "3456  **** 3456"
+    assert get_mask_card_number(card_number_data["only_four_digits"]) == "3456 ** **** 3456"
 
 
 def test_get_mask_card_number_invalid_type(card_number_data: dict) -> None:

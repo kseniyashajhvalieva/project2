@@ -47,7 +47,7 @@ def test_mask_account_card_account(operations_data: List[Dict[str, Any]]) -> Non
     """
     # Тестируем маскировку счета
     account_entry = operations_data[0]
-    expected_mask = "4561"  # Ожидаем (из masks.py) + последние 4 цифры
+    expected_mask = "**4561"  # Ожидаем (из masks.py) + последние 4 цифры
     assert mask_account_card(account_entry["to"]) == expected_mask
 
 

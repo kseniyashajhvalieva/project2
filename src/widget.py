@@ -11,7 +11,7 @@ def mask_account_card(data: str) -> str:
     if "Счет" in data:
         try:
             account_num = int(number_str)
-            return get_mask_account(account_num)
+            return "" + get_mask_account(account_num)
         except ValueError:
             raise ValueError("invalid literal for int() with base 10: '{}'".format(number_str))
     elif "Visa" in data or "MasterCard" in data or "Maestro" in data or "Мир" in data:
