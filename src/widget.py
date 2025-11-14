@@ -5,10 +5,23 @@ from src.masks import get_mask_account, get_mask_card_number
 
 def mask_account_card(data: str) -> str:
     """Маскирует номер карты или счета."""
+    parts = data.split()
+    number_str = parts[-1]
+
     if "Счет" in data:
-        return get_mask_account(int(data.split()[-1]))
+        try:
+            account_num = int(number_str)
+            return "" + get_mask_account(account_num)
+        except ValueError:
+            raise ValueError("invalid literal for int() with base 10: '{}'".format(number_str))
+    elif "Visa" in data or "MasterCard" in data or "Maestro" in data or "Мир" in data:
+        try:
+            card_num = int(number_str)
+            return get_mask_card_number(card_num)
+        except ValueError:
+            raise ValueError("invalid literal for int() with base 10: '{}'".format(number_str))
     else:
-        return get_mask_card_number(int(data.split()[-1]))
+        raise ValueError("Invalid input string for masking")
 
 
 def get_date(date_string: str) -> str:
