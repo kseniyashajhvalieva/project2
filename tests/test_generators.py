@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Iterator
 
 import pytest
 
-from src.generators import filter_by_currency, transaction_descriptions
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 
 @pytest.fixture
@@ -154,3 +154,21 @@ def test_transaction_descriptions_no_description_key() -> None:
     descriptions_gen = transaction_descriptions(transactions_with_missing_desc)
     expected_descriptions = ["Оплата", "Покупка"]
     assert list(descriptions_gen) == expected_descriptions
+
+
+@pytest.mark.parametrize(
+    "start, stop, expected_cards",
+    [
+        (1, 3, ["0000 0000 0000 0001", "0000 0000 0000 0002", "0000 0000 0000 0003"]),
+        (10, 11, ["0000 0000 0000 0010", "0000 0000 0000 0011"]),
+        (123456789012345, 123456789012345, ["0123 4567 8901 2345"]), # Большое число
+        (9999999999999998, 9999999999999999, ["9999 9999 9999 9998", "9999 9999 9999 9999"]), # Крайние значения
+        (0, 0, ["0000 0000 0000 0000"]), # Проверка на 0
+    ]
+)
+def test_card_number_generator_range_and_format(
+    start: int, stop: int, expected_cards: List[str]
+) -> None:
+    """Проверяет генерацию номеров карт в заданном диапазоне и их формат."""
+    generated_cards = list(card_number_generator(start, stop))
+    assert generated_cards == expected_cards
