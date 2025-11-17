@@ -1,3 +1,4 @@
+from itertools import count
 from typing import Any, Dict, List, Iterator
 
 
@@ -14,3 +15,13 @@ def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Iterator[str
         result_description = transact.get("description")
         if result_description != None:
             yield result_description
+
+
+def card_number_generator(start: int, stop: int) -> Iterator[str]:
+    """Принимает начальное и конечное значения для генерации диапазона номеров"""
+    for st in range(start, stop+1):
+        st_str = str(st)
+        while len(st_str) < 16:
+            st_str = "0" + st_str
+        card_number_gen = f"{st_str[:4]} {st_str[4:8]} {st_str[8:12]} {st_str[12:]}"
+        yield card_number_gen
