@@ -1,17 +1,18 @@
 from functools import wraps
-from typing import Callable, Any
+from typing import Any, Callable
 
 
-def log(filename: str ="") -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+def log(filename: str = "") -> Callable[[Callable[..., Any]], Callable[..., Any]]:
     """
-        Декоратор для логирования выполнения функций.
+    Декоратор для логирования выполнения функций.
 
-        Логирует начало и конец выполнения функции, ее результаты
-        или возникшие ошибки в файл или консоль.
+    Логирует начало и конец выполнения функции, ее результаты
+    или возникшие ошибки в файл или консоль.
 
-        Если имя файла для записи логов не задано, логи выводятся в консоль.
-        """
-    def decorator(func):
+    Если имя файла для записи логов не задано, логи выводятся в консоль.
+    """
+
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             log_message: str = ""
@@ -22,12 +23,14 @@ def log(filename: str ="") -> Callable[[Callable[..., Any]], Callable[..., Any]]
                 func_result = func(*args, **kwargs)
                 log_message = f"{func.__name__} ok"
             except Exception as e:
-                log_message = f"{func.__name__} error: {type(e).__name__}. Inputs: {args}, {kwargs}"  # Используй __name__
+                log_message = (
+                    f"{func.__name__} error: {type(e).__name__}. Inputs: {args}, {kwargs}"  # Используй __name__
+                )
                 caught_exception = e
 
             if filename:
-                with open(filename, 'a') as f:
-                    f.write(log_message + '\n')
+                with open(filename, "a") as f:
+                    f.write(log_message + "\n")
             else:
                 print(log_message)
 
@@ -35,5 +38,7 @@ def log(filename: str ="") -> Callable[[Callable[..., Any]], Callable[..., Any]]
                 raise caught_exception
 
             return func_result
+
         return wrapper
+
     return decorator
