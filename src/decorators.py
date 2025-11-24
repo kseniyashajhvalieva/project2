@@ -3,6 +3,14 @@ from typing import Callable, Any
 
 
 def log(filename: str ="") -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """
+        Декоратор для логирования выполнения функций.
+
+        Логирует начало и конец выполнения функции, ее результаты
+        или возникшие ошибки в файл или консоль.
+
+        Если имя файла для записи логов не задано, логи выводятся в консоль.
+        """
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
