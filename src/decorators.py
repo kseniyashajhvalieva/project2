@@ -13,15 +13,17 @@ def log(filename: str ="") -> Callable[[Callable[..., Any]], Callable[..., Any]]
         """
     def decorator(func):
         @wraps(func)
-        def wrapper(*args, **kwargs):
-            log_message = ""
-            func_result = None
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            log_message: str = ""
+            func_result: Any = None
+            caught_exception: Any = None
 
             try:
                 func_result = func(*args, **kwargs)
                 log_message = f"{func.__name__} ok"
             except Exception as e:
-                log_message = f"{func.__name__} error: {type(e).__name__}. Inputs: {args}, {kwargs}"
+                log_message = f"{func.__name__} error: {type(e).__name__}. Inputs: {args}, {kwargs}"  # Используй __name__
+                caught_exception = e
 
             if filename:
                 with open(filename, 'a') as f:
@@ -29,8 +31,8 @@ def log(filename: str ="") -> Callable[[Callable[..., Any]], Callable[..., Any]]
             else:
                 print(log_message)
 
-            if "error" in log_message:
-                raise
+            if caught_exception:
+                raise caught_exception
 
             return func_result
         return wrapper
