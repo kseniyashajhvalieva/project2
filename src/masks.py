@@ -1,3 +1,13 @@
+import logging
+
+logger = logging.getLogger(__name__)
+file_handler = logging.FileHandler('logs/masks.log', mode='w')
+logger.addHandler(file_handler)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.setLevel(logging.DEBUG)
+
+
 def get_mask_card_number(card_number: int) -> str:
     """
     Маскирует номер карты, показывая только первые 6 и последние 4 цифры.
