@@ -1,13 +1,12 @@
 import json
-import os
 import logging
-from typing import List, Dict, Any
-
+import os
+from typing import Any, Dict
 
 logger = logging.getLogger(__name__)
-file_handler = logging.FileHandler('logs/utils.log', mode='w')
+file_handler = logging.FileHandler("logs/utils.log", mode="w")
 logger.addHandler(file_handler)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
 logger.setLevel(logging.DEBUG)
 
@@ -57,10 +56,15 @@ def get_transaction_amount(transaction: Dict[str, Any]) -> str:
         logger.info(f"Сумма транзакции ID {transaction.get('id', 'N/A')}: {full_amount}")
         return full_amount
     except (KeyError, TypeError) as e:
-        logger.error(f"Отсутствует ключ или ошибка типа при получении суммы транзакции ID "
-                     f"{transaction.get('id', 'N/A')}: {e}", exc_info=True)
+        logger.error(
+            f"Отсутствует ключ или ошибка типа при получении суммы транзакции ID "
+            f"{transaction.get('id', 'N/A')}: {e}",
+            exc_info=True,
+        )
         return "Сумма недоступна"
     except Exception as e:
-        logger.error(f"Неизвестная ошибка при получении суммы транзакции ID "
-                     f"{transaction.get('id', 'N/A')}: {e}", exc_info=True)
+        logger.error(
+            f"Неизвестная ошибка при получении суммы транзакции ID " f"{transaction.get('id', 'N/A')}: {e}",
+            exc_info=True,
+        )
         return "Сумма недоступна"
