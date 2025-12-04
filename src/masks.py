@@ -6,7 +6,7 @@ if not os.path.exists("logs"):
     os.makedirs("logs")
 
 logger_masks = logging.getLogger(__name__)
-file_handler_masks = logging.FileHandler('logs/masks.log', mode='w')
+file_handler_masks = logging.FileHandler('logs/masks.log', mode='w', encoding='utf-8')
 logger_masks.addHandler(file_handler_masks)
 formatter_masks = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 file_handler_masks.setFormatter(formatter_masks)
