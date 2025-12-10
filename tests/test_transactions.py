@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from unittest.mock import Mock, patch
 from typing import Dict, Any
-from src.transactions import csv_transactions
+from src.transactions import csv_transactions, excel_transactions
 
 
 @patch('pandas.read_csv')
@@ -29,3 +29,21 @@ def test_csv_empty_file() -> None:
         mock_read_csv.return_value = pd.DataFrame()
         result: list[Dict[str, Any]] = csv_transactions('empty.csv')
         assert result == []
+
+
+@patch('pandas.read_excel')
+def test_excel_transactions(mock_read_excel: Mock) -> None:
+    """Проверяет корректное чтение Excel файла и преобразование в список словарей."""
+    mock_data = pd.DataFrame({
+        'id': [3, 4],
+        'amount': [300, 400],
+        'state': ['EXECUTED', 'CANCELED']
+    })
+    mock_read_excel.return_value = mock_data
+
+    result: list[Dict[str, Any]] = excel_transactions('dummy.xlsx')
+
+    assert len(result) == 2
+    assert result[0]['state'] == 'EXECUTED'
+    assert result[1]['amount'] == 400
+    mock_read_excel.assert_called_once_with('dummy.xlsx')
