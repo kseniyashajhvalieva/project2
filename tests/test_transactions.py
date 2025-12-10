@@ -1,0 +1,31 @@
+import pandas as pd
+import pytest
+from unittest.mock import Mock, patch
+from typing import Dict, Any
+from src.transactions import csv_transactions
+
+
+@patch('pandas.read_csv')
+def test_csv_transactions(mock_read_csv: Mock) -> None:
+    """ Проверяет корректное чтение CSV файла и преобразование в список словарей."""
+    mock_data = pd.DataFrame({
+        'id': [1, 2],
+        'amount': [100, 200],
+        'currency': ['USD', 'EUR']
+    })
+    mock_read_csv.return_value = mock_data
+
+    result: list[Dict[str, Any]] = csv_transactions('dummy.csv')
+
+    assert len(result) == 2
+    assert result[0]['id'] == 1
+    assert result[1]['currency'] == 'EUR'
+    mock_read_csv.assert_called_once_with('dummy.csv')
+
+
+def test_csv_empty_file() -> None:
+    """Проверяет, что функция возвращает пустой список при отсутствии данных."""
+    with patch('pandas.read_csv') as mock_read_csv:
+        mock_read_csv.return_value = pd.DataFrame()
+        result: list[Dict[str, Any]] = csv_transactions('empty.csv')
+        assert result == []
