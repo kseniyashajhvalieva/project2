@@ -1,9 +1,9 @@
-import csv
+import pandas as pd
 
 def csv_transactions(file_path):
-    transactions = []
-    with open(file_path) as csv_file:
-        reader = csv.DictReader(csv_file)
-        for row in reader:
-            transactions.append(row)
-    return transactions
+    df = pd.read_csv(file_path)
+    return df.to_dict('records')
+
+
+# def excel_transactions(file_path):
+#     df = pd.read_excel():
