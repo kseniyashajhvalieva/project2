@@ -1,15 +1,18 @@
 import json
-from unittest.mock import mock_open, patch
+from unittest.mock import mock_open, patch, MagicMock
 from src.utils import read_json_file
 
-def test_read_json_file_success():
-    """Тест: успешное чтение валидного JSON-файла."""
-    mock_data = json.dumps([{"id": 1, "amount": 100}])
-    with patch("builtins.open", mock_open(read_data=mock_data)):
-        result = read_json_file("dummy_path.json")
-        assert result == [{"id": 1, "amount": 100}]
 
-def test_read_json_file_not_found_or_invalid():
+@patch("os.path.exists")
+@patch("builtins.open", new_callable=mock_open, read_data='[{"id": 1, "amount": 100}]')
+def test_read_json_file_success(mock_open_file: MagicMock, mock_exists: MagicMock) -> None:
+    """Тест: успешное чтение валидного JSON-файла."""
+    mock_exists.return_value = True
+    result = read_json_file("dummy_path.json")
+    assert result == [{"id": 1, "amount": 100}]
+
+
+def test_read_json_file_not_found_or_invalid() -> None:
     """Тест: файл не найден, пуст или JSON невалиден/не список."""
     with patch("builtins.open", side_effect=FileNotFoundError):
         result = read_json_file("non_existent_path.json")
