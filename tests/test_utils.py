@@ -1,5 +1,5 @@
-import json
-from unittest.mock import mock_open, patch, MagicMock
+from unittest.mock import MagicMock, mock_open, patch
+
 from src.utils import read_json_file
 
 
