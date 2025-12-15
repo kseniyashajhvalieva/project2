@@ -13,3 +13,14 @@ def test_search_by_description_found():
     assert len(result) == 2
     assert result[0]["id"] == 1
     assert result[1]["id"] == 3
+
+
+def test_search_by_description_not_found():
+    """Тест поиска операций по строке в описании - ничего не найдено."""
+    data = [
+        {"id": 1, "description": "Перевод организации"},
+        {"id": 2, "description": "Открытие вклада"}
+    ]
+    result = search_by_description(data, "покупка")
+    assert len(result) == 0
+
