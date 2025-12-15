@@ -18,7 +18,7 @@ def operations_data() -> List[Dict[str, Any]]:
             "amount": 1000.0,
             "currency": "RUB",
             "description": "Перевод",
-            "to": "Счет 77593040100000004561",  # Для теста счета
+            "to": "Счет 77593040100000004561",
         },
         {
             "id": 939719570,
@@ -27,7 +27,7 @@ def operations_data() -> List[Dict[str, Any]]:
             "amount": 500.0,
             "currency": "RUB",
             "description": "Перевод",
-            "to": "Карта Visa Classic 41428829725561076141",  # Измененный формат для теста карты
+            "to": "Карта Visa Classic 4142882972556107",
         },
         {
             "id": 594226727,
@@ -57,7 +57,7 @@ def test_mask_account_card_card(operations_data: List[Dict[str, Any]]) -> None:
     """
     # Тестируем маскировку карты
     card_entry = operations_data[1]
-    expected_mask = "4142 88** **** 6141"  # Ожидаем ** (из masks.py)
+    expected_mask = "4142 88** **** 6107"  # Ожидаем ** (из masks.py)
     assert mask_account_card(card_entry["to"]) == expected_mask
 
 

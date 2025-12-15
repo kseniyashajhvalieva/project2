@@ -42,7 +42,7 @@ def read_json_file(file_path: str) -> list[Dict[str, Any]]:
 
 def transaction_description(transaction: Dict[str, Any]) -> str:
     logger.debug(f"Получение описания для транзакции ID: {transaction.get('id', 'N/A')}")
-    description = transaction.get("description", "Описание отсутствует")
+    description = str(transaction.get("description", "Описание отсутствует"))
     logger.info(f"Описание транзакции ID {transaction.get('id', 'N/A')}: '{description}'")
     return description
 

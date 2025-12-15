@@ -1,13 +1,16 @@
+from typing import Generator
+from unittest.mock import patch
+
 import pytest
 import requests
-from unittest.mock import patch
+
 from src.external_api import convert_currency
 
 
 @pytest.fixture(autouse=True)
-def mock_env_vars():
+def mock_env_vars() -> Generator[None, None, None]:
     """Мокирует os.getenv для EXCHANGE_RATE_API_KEY."""
-    with patch('os.getenv', return_value='dummy_api_key'):
+    with patch("os.getenv", return_value="dummy_api_key"):
         yield
 
 
@@ -22,12 +25,15 @@ def mock_env_vars():
         ({"amount": 50, "currency": "EUR"}, {"success": False, "error": "some_error"}, True, 50.0),
         # Запрос к API вызвал исключение, возвращаем исходную сумму
         ({"amount": 75, "currency": "USD"}, requests.exceptions.RequestException, True, 75.0),
-    ]
+    ],
 )
 def test_convert_currency_parametrized_short(
-        transaction: dict, mock_api_response, api_call_expected: bool, expected_amount: float
-):
-    """ Проверяет основные сценарии конвертации и ошибок."""
+    transaction: dict,
+    mock_api_response: dict | type[Exception] | None,
+    api_call_expected: bool,
+    expected_amount: float,
+) -> None:
+    """Проверяет основные сценарии конвертации и ошибок."""
     with patch("requests.get") as mock_get:
         if api_call_expected:
             mock_get.return_value.status_code = 200  # Для всех API-вызовов
