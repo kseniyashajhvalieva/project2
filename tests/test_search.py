@@ -1,5 +1,5 @@
 import pytest
-from src.search import search_by_description
+from src.search import search_by_description, count_by_categories
 
 
 def test_search_by_description_found():
@@ -24,3 +24,15 @@ def test_search_by_description_not_found():
     result = search_by_description(data, "покупка")
     assert len(result) == 0
 
+
+def test_count_by_categories():
+    """Тест подсчета операций по категориям."""
+    data = [
+        {"id": 1, "description": "Перевод организации"},
+        {"id": 2, "description": "Открытие вклада"},
+        {"id": 3, "description": "Перевод организации"},
+        {"id": 4, "description": "Перевод со счета на счет"}
+    ]
+    categories = ["Перевод организации", "Открытие вклада"]
+    result = count_by_categories(data, categories)
+    assert result == {"Перевод организации": 2, "Открытие вклада": 1}
