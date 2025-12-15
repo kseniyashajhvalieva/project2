@@ -36,3 +36,14 @@ def test_count_by_categories():
     categories = ["Перевод организации", "Открытие вклада"]
     result = count_by_categories(data, categories)
     assert result == {"Перевод организации": 2, "Открытие вклада": 1}
+
+
+def test_count_by_categories_empty():
+    """Тест подсчета операций по категориям - нет совпадений."""
+    data = [
+        {"id": 1, "description": "Перевод организации"},
+        {"id": 2, "description": "Перевод со счета на счет"}
+    ]
+    categories = ["Пополнение счета", "Снятие наличных"]
+    result = count_by_categories(data, categories)
+    assert result == {}
